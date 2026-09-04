@@ -1285,36 +1285,47 @@ export default function ParallelogramGrid() {
     name: 'Bottone Squishy 3D Neo-Pop',
     category: 'bottoni',
     categoryLabel: 'Bottoni',
-    description: 'Bottone tattile con ombra dura a contrasto ed effetto di compressione fisica alla pressione.',
+    description: 'Bottone tattile con compressione fisica ed effetto Scossa Pop a vibrazione elettrica e sonoro.',
     shape: 'Rettangolo Bombato con Ombra a Blocco',
-    colorPalette: ['#a3e635', '#ec4899', '#000000'],
+    colorPalette: ['#a3e635', '#ec4899', '#000000', '#fde047'],
     component: NeoPopSquishyButton,
-    tags: ['squishy', '3d', 'neo-pop', 'tattile'],
+    tags: ['squishy', '3d', 'neo-pop', 'scossa-pop', 'vibrazione', 'tattile'],
     code: `import React, { useState } from 'react';
-import { Zap, Sparkles, Check } from 'lucide-react';
+import { Sparkles, Zap, Check, Flame } from 'lucide-react';
 
 export default function NeoPopSquishyButton() {
-  const [clicked, setClicked] = useState(false);
-
-  const handleClick = () => {
-    setClicked(true);
-    setTimeout(() => setClicked(false), 800);
-  };
+  const [squished, setSquished] = useState(false);
+  const [isShocking, setIsShocking] = useState(false);
 
   return (
     <div className="flex flex-wrap items-center justify-center gap-6 p-6">
+      {/* 1. Premi Squish */}
       <button
-        onClick={handleClick}
-        className="group relative inline-flex items-center gap-2 px-8 py-4 bg-lime-400 text-stone-950 font-black text-sm uppercase tracking-wider rounded-2xl border-3 border-black shadow-[6px_6px_0px_#000] hover:translate-x-1 hover:translate-y-1 hover:shadow-[2px_2px_0px_#000] active:translate-x-1.5 active:translate-y-1.5 active:shadow-none transition-all duration-150"
+        onClick={() => {
+          setSquished(true);
+          setTimeout(() => setSquished(false), 300);
+        }}
+        className={\`inline-flex items-center gap-2 px-8 py-4 bg-lime-400 text-stone-950 font-black text-sm uppercase rounded-2xl border-3 border-black transition-all \${
+          squished ? 'scale-x-110 scale-y-75 translate-y-2 shadow-[1px_1px_0px_#000]' : 'shadow-[6px_6px_0px_#000]'
+        }\`}
       >
         <Zap className="w-5 h-5 fill-stone-950" />
-        <span>{clicked ? 'PULSATO!' : 'PREMI SQUISH'}</span>
-        {clicked && <Check className="w-4 h-4 text-stone-950 stroke-[3]" />}
+        <span>{squished ? 'SQUISHED!' : 'PREMI SQUISH'}</span>
+        {squished && <Check className="w-4 h-4 stroke-[3]" />}
       </button>
 
-      <button className="group relative inline-flex items-center gap-2 px-8 py-4 bg-pink-500 text-white font-black text-sm uppercase tracking-wider rounded-2xl border-3 border-black shadow-[6px_6px_0px_#000] hover:translate-x-1 hover:translate-y-1 hover:shadow-[2px_2px_0px_#000] active:translate-x-1.5 active:translate-y-1.5 active:shadow-none transition-all duration-150">
-        <Sparkles className="w-5 h-5 fill-yellow-300 text-black" />
-        <span>SCOSSA POP</span>
+      {/* 2. Scossa Pop con Vibrazione Elettrica */}
+      <button
+        onClick={() => {
+          setIsShocking(true);
+          setTimeout(() => setIsShocking(false), 500);
+        }}
+        className={\`inline-flex items-center gap-2 px-8 py-4 bg-pink-500 text-white font-black text-sm uppercase rounded-2xl border-3 border-black transition-all \${
+          isShocking ? 'animate-pop-shake bg-pink-600 ring-4 ring-yellow-300' : 'shadow-[6px_6px_0px_#000]'
+        }\`}
+      >
+        {isShocking ? <Flame className="w-5 h-5 text-yellow-300 animate-bounce" /> : <Sparkles className="w-5 h-5 fill-yellow-300 text-black" />}
+        <span>{isShocking ? 'SCOSSA ATTIVA! ⚡' : 'SCOSSA POP'}</span>
       </button>
     </div>
   );
@@ -1367,39 +1378,42 @@ export default function MagneticGlowPillButton() {
     name: 'Bottone Timbro Dentellato',
     category: 'bottoni',
     categoryLabel: 'Bottoni',
-    description: 'Bottone sagomato a matrice di biglietto perforato con ritagli laterali dentellati.',
+    description: 'Bottone sagomato a matrice perforata con timbro a inchiostro reale e taglio a cesoia della matrice.',
     shape: 'Taglio Dentellato Perforato (Clip-Path)',
     colorPalette: ['#f97316', '#4f46e5', '#0c0a09'],
     component: JaggedStampButton,
-    tags: ['timbro', 'biglietto', 'dentellato', 'clip-path'],
+    tags: ['timbro', 'biglietto', 'taglio', 'matrice', 'dentellato', 'clip-path'],
     code: `import React, { useState } from 'react';
-import { Ticket, Scissors, Check } from 'lucide-react';
+import { Ticket, Scissors, Check, Stamp } from 'lucide-react';
 
 export default function JaggedStampButton() {
-  const [punched, setPunched] = useState(false);
+  const [stampCount, setStampCount] = useState(0);
+  const [isCut, setIsCut] = useState(false);
 
   return (
     <div className="flex flex-wrap items-center justify-center gap-6 p-6">
+      {/* 1. Timbra Biglietto con Sigillo */}
       <button
-        onClick={() => {
-          setPunched(true);
-          setTimeout(() => setPunched(false), 1200);
-        }}
-        className="relative group bg-orange-500 text-stone-950 font-black text-xs sm:text-sm uppercase tracking-wider py-4 px-8 border-2 border-stone-950 shadow-[4px_4px_0px_#000] hover:bg-orange-400 active:scale-95 transition-all"
+        onClick={() => setStampCount((c) => c + 1)}
+        className="relative bg-orange-500 text-stone-950 font-black text-xs sm:text-sm uppercase py-4 px-8 border-3 border-stone-950 shadow-[6px_6px_0px_#000] active:scale-95"
         style={{
           clipPath:
             'polygon(0% 0%, 10% 0%, 10% 8px, 20% 8px, 20% 0%, 80% 0%, 80% 8px, 90% 8px, 90% 0%, 100% 0%, 100% 100%, 90% 100%, 90% calc(100% - 8px), 80% calc(100% - 8px), 80% 100%, 20% 100%, 20% calc(100% - 8px), 10% calc(100% - 8px), 10% 100%, 0% 100%)',
         }}
       >
         <div className="flex items-center gap-2">
-          <Ticket className="w-4 h-4" />
-          <span>{punched ? 'OBLITERATO!' : 'TIMBRA BIGLIETTO'}</span>
-          {punched && <Check className="w-4 h-4 text-stone-950 stroke-[3]" />}
+          <Stamp className="w-4 h-4" />
+          <span>{stampCount > 0 ? \`TIMBRATO [\${stampCount}X]\` : 'TIMBRA BIGLIETTO'}</span>
+          {stampCount > 0 && <Check className="w-4 h-4 text-stone-950 stroke-[3]" />}
         </div>
       </button>
 
+      {/* 2. Taglio Matrice a Forbice */}
       <button
-        className="relative group bg-indigo-600 text-white font-black text-xs sm:text-sm uppercase tracking-wider py-4 px-8 border-2 border-stone-950 shadow-[4px_4px_0px_#000] hover:bg-indigo-500 active:scale-95 transition-all"
+        onClick={() => setIsCut(!isCut)}
+        className={\`relative bg-indigo-600 text-white font-black text-xs sm:text-sm uppercase py-4 px-8 border-3 border-stone-950 transition-all \${
+          isCut ? 'bg-purple-900 border-dashed translate-x-2 rotate-1 shadow-[8px_8px_0px_#ffeb3b]' : 'shadow-[6px_6px_0px_#000]'
+        }\`}
         style={{
           clipPath:
             'polygon(0% 0%, 10% 0%, 10% 8px, 20% 8px, 20% 0%, 80% 0%, 80% 8px, 90% 8px, 90% 0%, 100% 0%, 100% 100%, 90% 100%, 90% calc(100% - 8px), 80% calc(100% - 8px), 80% 100%, 20% 100%, 20% calc(100% - 8px), 10% calc(100% - 8px), 10% 100%, 0% 100%)',
@@ -1407,7 +1421,7 @@ export default function JaggedStampButton() {
       >
         <div className="flex items-center gap-2">
           <Scissors className="w-4 h-4 text-amber-300" />
-          <span>TAGLIO MATRICE</span>
+          <span>{isCut ? 'TAGLIATO! ✂️' : 'TAGLIO MATRICE'}</span>
         </div>
       </button>
     </div>
@@ -1416,50 +1430,52 @@ export default function JaggedStampButton() {
   },
   {
     id: 'jelly-double-layer-button',
-    name: 'Bottone a Doppio Strato Jelly Pop',
+    name: 'Bottone a Doppio Strato Jelly Pop & 3D Dual-Layer',
     category: 'bottoni',
     categoryLabel: 'Bottoni',
-    description: 'Bottone a due strati gommosi con rimbalzo elastico e curvatura morbida.',
-    shape: 'Doppio Strato Organico (3rem)',
-    colorPalette: ['#f43f5e', '#38bdf8', '#a855f7'],
+    description: 'Due pulsanti a meccanica distinta: il Jelly Pop a rimbalzo gelatinoso (wobble) e il Dual-Layer 3D con telaio a scatto meccanico.',
+    shape: 'Doppio Strato Organico & Chassis 3D',
+    colorPalette: ['#f43f5e', '#38bdf8', '#10b981', '#a855f7'],
     component: JellyDoubleLayerButton,
-    tags: ['jelly', 'gommoso', 'doppio-strato', 'elastico'],
+    tags: ['jelly', 'gommoso', 'doppio-strato', 'dual-layer', 'meccanico', 'elastico'],
     code: `import React, { useState } from 'react';
-import { Smile, Sparkles } from 'lucide-react';
+import { Smile, Layers, Sparkles } from 'lucide-react';
 
 export default function JellyDoubleLayerButton() {
-  const [bounced, setBounced] = useState(false);
-
-  const triggerBounce = () => {
-    setBounced(true);
-    setTimeout(() => setBounced(false), 500);
-  };
+  const [jellyWobble, setJellyWobble] = useState(false);
+  const [dualActive, setDualActive] = useState(false);
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-6 p-6">
+    <div className="flex flex-wrap items-center justify-center gap-8 p-6">
+      {/* 1. Jelly Pop Gommoso */}
       <div className="relative group inline-block">
-        <div className="absolute inset-0 translate-y-2 bg-sky-400 rounded-3xl transition-transform group-hover:translate-y-3" />
+        <div className="absolute inset-0 translate-y-3 bg-sky-400 rounded-3xl" />
         <button
-          onClick={triggerBounce}
-          className={\`relative px-8 py-4 bg-gradient-to-r from-rose-500 to-orange-400 text-white font-extrabold text-xs sm:text-sm rounded-3xl shadow-md flex items-center gap-2 transition-all duration-300 \${
-            bounced ? 'scale-90 -translate-y-1' : 'group-hover:-translate-y-1'
+          onClick={() => {
+            setJellyWobble(true);
+            setTimeout(() => setJellyWobble(false), 600);
+          }}
+          className={\`relative px-8 py-4 bg-gradient-to-r from-rose-500 to-orange-400 text-white font-black text-xs sm:text-sm rounded-3xl shadow-lg flex items-center gap-2 transition-all \${
+            jellyWobble ? 'animate-jelly-wobble' : 'hover:-translate-y-1 active:scale-95'
           }\`}
         >
-          <Smile className={\`w-4 h-4 transition-transform \${bounced ? 'rotate-180' : ''}\`} />
-          <span className="tracking-wide">JELLY POP ELASTICO</span>
+          <Smile className="w-5 h-5" />
+          <span>{jellyWobble ? 'JELLY POP! 🫧' : 'JELLY POP ELASTICO'}</span>
         </button>
       </div>
 
-      <div className="relative group inline-block">
-        <div className="absolute inset-0 translate-y-2 bg-purple-700 rounded-3xl transition-transform group-hover:translate-y-3" />
+      {/* 2. Meccanico Dual-Layer 3D a Scatto */}
+      <div className="p-1.5 bg-stone-950 border-3 border-black rounded-2xl shadow-[6px_6px_0px_#000]">
         <button
-          onClick={triggerBounce}
-          className={\`relative px-8 py-4 bg-lime-400 text-stone-950 font-extrabold text-xs sm:text-sm rounded-3xl shadow-md flex items-center gap-2 transition-all duration-300 \${
-            bounced ? 'scale-90 -translate-y-1' : 'group-hover:-translate-y-1'
+          onClick={() => setDualActive(!dualActive)}
+          className={\`relative px-7 py-3 font-black text-xs sm:text-sm uppercase rounded-xl border-2 border-black flex items-center gap-2 transition-all \${
+            dualActive
+              ? 'bg-emerald-400 text-stone-950 translate-y-1 shadow-[1px_1px_0px_#000]'
+              : 'bg-lime-400 text-stone-950 -translate-y-1 shadow-[4px_4px_0px_#000]'
           }\`}
         >
-          <Sparkles className="w-4 h-4 text-purple-900" />
-          <span className="tracking-wide">RIMBALZO DUAL-LAYER</span>
+          <Layers className="w-4 h-4" />
+          <span>{dualActive ? 'DUAL-LAYER: ON' : 'SCATTO DUAL-LAYER'}</span>
         </button>
       </div>
     </div>
