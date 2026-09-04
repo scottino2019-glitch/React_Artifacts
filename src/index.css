@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+/* Artistic Flair custom scrollbars with black blocks and yellow hover */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e5e5e5;
+  border-left: 1px solid #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #000000;
+  border: 1px solid #000;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ffeb3b;
+}
+

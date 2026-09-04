@@ -1,0 +1,6 @@
+{
+  "name": "Raccolta Componenti React",
+  "description": "Galleria di componenti React originali, colorati e con forme uniche pronti per l'anteprima, la copia del codice e il download in formato TSX.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
